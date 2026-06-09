@@ -50,7 +50,7 @@ connectDatabase();
 // 3. FIX: Changed '3000 || PORT' to 'process.env.PORT || 3000'
 // Deployed platforms (like Render/Railway) assign dynamic ports via process.env.PORT.
 // Hardcoding 3000 first will make the deployment fail online.
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+const PORT = process.env.MONGO_URI || 3000;
+app.listen(MONGO_URI, () => {
+    console.log(`Server is running on port ${MONGO_URI}`);
 });
