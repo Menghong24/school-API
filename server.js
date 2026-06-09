@@ -11,7 +11,8 @@ app.use(express.json());
 const allowedOrigins = [
   "http://localhost:5173", 
   "https://gorgeous-pastelito-4b421c.netlify.app",
-  "https://mvwdar.netlify.app" // Added this based on your previous error log
+  "https://mvwdar.netlify.app",// Added this based on your previous error log
+   "https://m-school-kappa.vercel.app"
 ];
 
 app.use(cors({
