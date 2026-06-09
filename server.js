@@ -7,26 +7,27 @@ const cors = require("cors");
 
 app.use(express.json());
 
-// 1. FIX: Pass an array of allowed strings instead of using the || operator
 const allowedOrigins = [
-  "http://localhost:5173", 
+  "http://localhost:5173",
   "https://gorgeous-pastelito-4b421c.netlify.app",
-  "https://mvwdar.netlify.app",// Added this based on your previous error log
-   "https://m-school-kappa.vercel.app"
+  "https://mvwdar.netlify.app",
+  "https://m-school-kappa.vercel.app"
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps, curl, or server-to-server)
     if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
+
+    const cleanOrigin = origin.replace(/\/$/, "");
+
+    if (allowedOrigins.includes(cleanOrigin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      console.log("Blocked CORS:", origin);
+      callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true // Set to true if you plan to send cookies or authorization headers
+  credentials: true
 }));
 
 app.use(require('./modules/students/students.route'));
@@ -40,8 +41,7 @@ app.use(require('./modules/schedules/schedules.route'));
 app.use(require('./modules/announcements/announcements.route'));
 app.use(require('./modules/users/users.route'));
 
-// 2. FIX: Express error handlers require 4 arguments (err, req, res, next) 
-// to be recognized properly by Express, otherwise 'res' will be undefined.
+
 app.use((err, req, res, next) => {
     res.status(500).send({ error: err.message });
 });
