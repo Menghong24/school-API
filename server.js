@@ -46,7 +46,12 @@ app.use((err, req, res, next) => {
 });
 
 connectDatabase();
-
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "School API is running"
+  });
+});
 // 3. FIX: Changed '3000 || PORT' to 'process.env.PORT || 3000'
 // Deployed platforms (like Render/Railway) assign dynamic ports via process.env.PORT.
 // Hardcoding 3000 first will make the deployment fail online.
